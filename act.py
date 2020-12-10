@@ -60,7 +60,8 @@ def generate_text():
     letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for i in range(5))
 
-def generate_ticket():
+def generate_ticket(s):
+    random.seed(s)
     digits = string.digits
     return 'SR' + ''.join(random.choice(digits) for i in range(10))
 
@@ -118,33 +119,53 @@ def broadband():
         print("Wrong input. Try again.")
         ch = int(input("Enter your choice: "))
     if ch == 1:
-        pass
+        new_broadband()
     elif ch == 2:
-        pass
+        internet_not_working()
     elif ch == 3:
-        pass
+        configure_router()
     elif ch == 4:
-        pass
+        forgot_password()
     elif ch == 5:
-        pass
+        account_details()
     elif ch == 6:
         bill_details()
     elif ch == 7:
         how_to_pay()
     elif ch == 8:
-        pass
+        reconnection()
     elif ch == 9:
-        pass
+        shift()
     elif ch == 10:
-        pass
+        check_status()
     elif ch == 11:
         payment_receipt()
     elif ch == 12:
-        pass
+        change_plan()
     elif ch == 13:
         power_issues()
     else:
         new_offers()
+
+# New broadband connection
+def new_broadband():
+    pass
+
+# Internet not working
+def internet_not_working():
+    pass
+
+# Configure router
+def configure_router():
+    pass
+
+# Forgot password
+def forgot_password():
+    pass
+
+# Account details
+def account_details():
+    pass
 
 # Bill details
 def bill_details():
@@ -154,7 +175,7 @@ def bill_details():
         while(month > 12 or month < 1):
             print("Wrong input. Try again.")
             month = int(input("Please select the month number to send the bill."))
-        print(f"We have sent the bill for the month {num_to_month[month-1]} to your registered mail id {to}")
+        print(f"We have sent the bill for the month {num_to_month[month-1]} to your registeredde mail id {to}")
         feedback()
     else:
         print("Wrong mail id. Try again.")
@@ -168,6 +189,18 @@ def how_to_pay():
     print("To know more you can also refer the FAQs section")
     feedback()
 
+# Reconnection
+def reconnection():
+    pass
+
+# Shift connection
+def shift():
+    pass
+
+# Check status
+def check_status():
+    pass
+
 # Payment receipt
 def payment_receipt():
     to = input("Enter the mail id to send the latest receipt: ")
@@ -177,13 +210,18 @@ def payment_receipt():
         print("Wrong mail id. Try again.")
         payment_receipt()
 
+# Change plan
+def change_plan():
+    pass
+    
 # Power issues
 def power_issues():
     print("We are checking the connectivity from backend. This might take about 10 seconds.")
     time.sleep(10)
     print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
     print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
-    print("Your ticket number is", generate_ticket())
+    print("Your ticket number is", generate_ticket(s))
+    s += 1
     feedback()
 
 # New offers
@@ -262,4 +300,5 @@ def new_connection():
 # Main function
 if __name__ == "__main__":
     auth = False
+    s = 0
     welcome()
