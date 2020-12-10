@@ -4,6 +4,21 @@ import string
 import re
 import time
 
+num_to_month = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'DEcember'
+]
+
 # Welcome
 def welcome():
     print("Hi, Welcome to ACT! Please select the service you need help with")
@@ -65,6 +80,7 @@ def authenticate():
     print(random_text)
     user_text = input("Enter the text shown above: ")
     if random_text == user_text:
+        print("Verification is successful.")
         return True
     else:
         print("The captcha entered was incorrect.")
@@ -112,7 +128,7 @@ def broadband():
     elif ch == 5:
         pass
     elif ch == 6:
-        pass
+        bill_details()
     elif ch == 7:
         how_to_pay()
     elif ch == 8:
@@ -129,6 +145,20 @@ def broadband():
         power_issues()
     else:
         new_offers()
+
+# Bill details
+def bill_details():
+    to = input("Enter the mail id to send the latest receipt: ")
+    if(validate_mail(to)):
+        month = int(input("Please select the month number to send the bill."))
+        while(month > 12 or month < 1):
+            print("Wrong input. Try again.")
+            month = int(input("Please select the month number to send the bill."))
+        print(f"We have sent the bill for the month {num_to_month[month-1]} to your registered mail id {to}")
+        feedback()
+    else:
+        print("Wrong mail id. Try again.")
+        bill_details()
 
 # How to pay bill
 def how_to_pay():
