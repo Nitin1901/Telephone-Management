@@ -149,11 +149,52 @@ def broadband():
 
 # New broadband connection
 def new_broadband():
-    pass
+    print("We would need a few details. Redirecting you to other screen for the same")
+    print("For any further queries, click on below button")
+    start_again()
 
 # Internet not working
 def internet_not_working():
-    pass
+    print("We are checking the connectivity from backend. This might take about 30-50 seconds")
+    time.sleep(10)
+    print("Please confirm if you are able to open www.google.com")
+    print("1.Yes\n2.No")
+    ch = int(input("Enter your choice: "))
+    while(ch > 2 or ch < 1):
+        print("Wrong input. Try again.")
+        ch = int(input("Enter your choice: "))
+    if(ch==1):
+        print("Please select your issue")
+        print("1.I am facing slow speed/buffering\n2.I am facing issue opening specific sites")
+        ch1 = int(input("Enter your choice: "))
+        while(ch1 > 2 or ch1 < 1):
+            print("Wrong input. Try again.")
+            ch1 = int(input("Enter your choice: "))
+        if(ch1==1):
+            print("Regret the inconvenience. Request you to follow these simple troubleshooting steps –")
+            print("- Please restart your router")
+            print("- Please clear browse cache/cookies")
+            print("- Please connect to 5Ghz for better speeds")
+            print("- You might experience slow speed on VPN. Please disconnect from VPN and check your speed")
+            print("Is the issue resolved?\n1.Yes\n2.No")
+            ch2 = int(input("Enter your choice: "))
+            while(ch2 > 2 or ch2 < 1):
+                print("Wrong input. Try again.")
+                ch2 = int(input("Enter your choice: "))
+            if(ch2 == 1):
+                print("Great! Looks like your service have been restored. Thank you for your patience")
+            else:
+                print("Request you to provide the comments")
+                print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
+                print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
+                print("Your ticket number is", generate_ticket(s))
+                s += 1
+            feedback()
+        else:
+            pass
+    else:
+        pass
+
 
 # Configure router
 def configure_router():
@@ -161,7 +202,8 @@ def configure_router():
 
 # Forgot password
 def forgot_password():
-    pass
+    print("Your ACT account credentials are sent to your registered mobile number.")
+    feedback()
 
 # Account details
 def account_details():
@@ -195,7 +237,18 @@ def reconnection():
 
 # Shift connection
 def shift():
-    pass
+    print("Okay, I will need a few details to proceed further.")
+    print("1.Sure\n2.Not now")
+    ch = int(input("Enter your choice: "))
+    while(ch > 2 or ch < 1):
+        print("Wrong input. Try again.")
+        ch = int(input("Enter your choice: "))
+    if(ch==1):
+        print("We would need a few details. Redirecting you to other screen for the same")
+        print("For any further queries, click on below button")
+    else:
+        print("I hope to see you soon! For any further queries connect with us through our ACT Fibernet app")
+    start_again()
 
 # Check status
 def check_status():
@@ -212,7 +265,19 @@ def payment_receipt():
 
 # Change plan
 def change_plan():
-    pass
+    print("Okay, I will need a few details to proceed further")
+    print("1.Sure\n2.Not now")
+    ch = int(input("Enter your choice: "))
+    while(ch > 2 or ch < 1):
+        print("Wrong input. Try again.")
+        ch = int(input("Enter your choice: "))
+    if(ch==1):
+        print("We would need a few details. Redirecting you to other screen for the same")
+        print("For any further queries, click on below button")
+    else:
+        print("I hope to see you soon! For any further queries connect with us through our ACT Fibernet app")
+    start_again()
+
     
 # Power issues
 def power_issues():
