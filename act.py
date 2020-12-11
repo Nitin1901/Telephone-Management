@@ -16,7 +16,7 @@ num_to_month = [
     'September',
     'October',
     'November',
-    'DEcember'
+    'December'
 ]
 
 # Welcome
@@ -60,8 +60,7 @@ def generate_text():
     letters = string.ascii_letters + string.digits
     return ''.join(random.choice(letters) for i in range(5))
 
-def generate_ticket(s):
-    random.seed(s)
+def generate_ticket():
     digits = string.digits
     return 'SR' + ''.join(random.choice(digits) for i in range(10))
 
@@ -100,6 +99,8 @@ def feedback():
 
 # ACT Broadband
 def broadband():
+    if(not auth):
+        auth = authenticate()
     print(" 1.New connection")
     print(" 2.Internet not working")
     print(" 3.Router configuration")
@@ -121,9 +122,9 @@ def broadband():
     if ch == 1:
         new_broadband()
     elif ch == 2:
-        internet_not_working()
+        internet_not_working() #
     elif ch == 3:
-        configure_router()
+        configure_router() #
     elif ch == 4:
         forgot_password()
     elif ch == 5:
@@ -133,7 +134,7 @@ def broadband():
     elif ch == 7:
         how_to_pay()
     elif ch == 8:
-        reconnection()
+        reconnection() #
     elif ch == 9:
         shift()
     elif ch == 10:
@@ -149,9 +150,7 @@ def broadband():
 
 # New broadband connection
 def new_broadband():
-    print("We would need a few details. Redirecting you to other screen for the same")
-    print("For any further queries, click on below button")
-    start_again()
+    new_connection()
 
 # Internet not working
 def internet_not_working():
@@ -163,14 +162,14 @@ def internet_not_working():
     while(ch > 2 or ch < 1):
         print("Wrong input. Try again.")
         ch = int(input("Enter your choice: "))
-    if(ch==1):
+    if ch == 1:
         print("Please select your issue")
         print("1.I am facing slow speed/buffering\n2.I am facing issue opening specific sites")
         ch1 = int(input("Enter your choice: "))
         while(ch1 > 2 or ch1 < 1):
             print("Wrong input. Try again.")
             ch1 = int(input("Enter your choice: "))
-        if(ch1==1):
+        if ch1 == 1:
             print("Regret the inconvenience. Request you to follow these simple troubleshooting steps –")
             print("- Please restart your router")
             print("- Please clear browse cache/cookies")
@@ -181,14 +180,14 @@ def internet_not_working():
             while(ch2 > 2 or ch2 < 1):
                 print("Wrong input. Try again.")
                 ch2 = int(input("Enter your choice: "))
-            if(ch2 == 1):
+            if ch2 == 1:
                 print("Great! Looks like your service have been restored. Thank you for your patience")
             else:
                 print("Request you to provide the comments")
                 print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
                 print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
-                print("Your ticket number is", generate_ticket(s))
-                s += 1
+                s = generate_ticket()
+                print("Your ticket number is", s)
             feedback()
         else:
             pass
@@ -207,7 +206,34 @@ def forgot_password():
 
 # Account details
 def account_details():
-    pass
+    print("Your current active package is A-Max 700 6M with quota of 500 GB and speed of 50 Mbps.")
+    print("Would you like me to assist you with any further details?")
+    print("1.Due amount")
+    print("2.Usage details")
+    print("3.Due date")
+    print("4.No thank you")
+    ch = int(input("Enter your choice: "))
+    while(ch > 4 or ch < 1):
+        print("Wrong input. Try again.")
+        ch = int(input("Enter your choice: "))
+    if ch == 1:
+        print(f"Your current due amount is Rs {random.randint(0,5000)}.")
+    elif ch == 2:
+        print(f"You have currently used {random.randint(0,100)} GB of the 100 GB.")
+    elif ch == 3:
+        print(f"Your payment due date is {random.randint(1,30)} {num_to_month[random.randint(0,12)]} {2021}")
+    else:
+        feedback()
+        return
+    other_details()
+
+# Other details
+def other_details():
+    ch = input("Would you like me to assist you with any further details, Yes/No? ")
+    if ch[0].lower() == 'y':
+        new_offers()
+    else:
+        account_details()
 
 # Bill details
 def bill_details():
@@ -252,7 +278,12 @@ def shift():
 
 # Check status
 def check_status():
-    pass
+    if s != 0:
+        print("These are the service requests open for you.")
+        print(s)
+    else:
+        print("There are no tickets open for you.")
+    
 
 # Payment receipt
 def payment_receipt():
@@ -285,8 +316,8 @@ def power_issues():
     time.sleep(10)
     print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
     print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
-    print("Your ticket number is", generate_ticket(s))
-    s += 1
+    s = generate_ticket()
+    print("Your ticket number is", s)
     feedback()
 
 # New offers
@@ -328,7 +359,7 @@ def new_offers():
 
 # Other offers
 def other_offer():
-    print("Would you like us to assist you with any other offer details, Yes/No? ")
+    ch = input("Would you like us to assist you with any other offer details, Yes/No? ")
     if ch[0].lower() == 'y':
         new_offers()
     else:
