@@ -19,6 +19,10 @@ num_to_month = [
     'December'
 ]
 
+auth = False
+s = 0
+phone = 0
+
 # Welcome
 def welcome():
     print("Hi, Welcome to ACT! Please select the service you need help with")
@@ -47,8 +51,10 @@ def get_phone():
 
 # Validating phone number
 def validate_number(phone):
-    pattern = re.compile("[7-9][0-9]{9}")
-    return pattern.match(phone)
+    if len(phone) == 10:
+        pattern = re.compile("[7-9][0-9]{9}")
+        return pattern.match(phone)
+    return False
 
 # Validating mail id
 def validate_mail(mail):
@@ -75,6 +81,7 @@ def start_again():
 # Authenticate
 def authenticate():
     print("As a process of authentication, I would require you to provide your 10 digit mobile number.")
+    global phone
     phone = get_phone()
     random_text = generate_text()
     print(random_text)
@@ -99,6 +106,7 @@ def feedback():
 
 # ACT Broadband
 def broadband():
+    global auth
     if(not auth):
         auth = authenticate()
     print(" 1.New connection")
@@ -122,7 +130,7 @@ def broadband():
     if ch == 1:
         new_broadband()
     elif ch == 2:
-        internet_not_working() #
+        internet_not_working() 
     elif ch == 3:
         configure_router() #
     elif ch == 4:
@@ -134,7 +142,7 @@ def broadband():
     elif ch == 7:
         how_to_pay()
     elif ch == 8:
-        reconnection() #
+        reconnection() 
     elif ch == 9:
         shift()
     elif ch == 10:
@@ -154,7 +162,7 @@ def new_broadband():
 
 # Internet not working
 def internet_not_working():
-    print("We are checking the connectivity from backend. This might take about 30-50 seconds")
+    print("We are checking the connectivity from backend. This might take about 10 seconds")
     time.sleep(10)
     print("Please confirm if you are able to open www.google.com")
     print("1.Yes\n2.No")
@@ -186,22 +194,22 @@ def internet_not_working():
                 print("Request you to provide the comments")
                 print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
                 print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
+                global s
                 s = generate_ticket()
                 print("Your ticket number is", s)
-            feedback()
         else:
-            print("Please enter the site with which you are having trouble")
-            input()
+            input("Please enter the site with which you are having trouble: ")
+            global s
             s = generate_ticket()
             print("Your ticket number is", s)
     else:
         print("Request you to provide the comments")
         print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
         print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
+        global s
         s = generate_ticket()
         print("Your ticket number is", s)
-    start_again()
-
+    feedback()
 
 # Configure router
 def configure_router():
@@ -229,7 +237,7 @@ def account_details():
     elif ch == 2:
         print(f"You have currently used {random.randint(0,100)} GB of the 100 GB.")
     elif ch == 3:
-        print(f"Your payment due date is {random.randint(1,30)} {num_to_month[random.randint(0,12)]} {2021}")
+        print(f"Your payment due date is {random.randint(1,30)} {num_to_month[random.randint(0,11)]} {2021}")
     else:
         feedback()
         return
@@ -239,19 +247,19 @@ def account_details():
 def other_details():
     ch = input("Would you like me to assist you with any further details, Yes/No? ")
     if ch[0].lower() == 'y':
-        new_offers()
-    else:
         account_details()
+    else:
+        feedback()
 
 # Bill details
 def bill_details():
     to = input("Enter the mail id to send the latest receipt: ")
     if(validate_mail(to)):
-        month = int(input("Please select the month number to send the bill."))
+        month = int(input("Please select the month number to send the bill: "))
         while(month > 12 or month < 1):
             print("Wrong input. Try again.")
             month = int(input("Please select the month number to send the bill."))
-        print(f"We have sent the bill for the month {num_to_month[month-1]} to your registeredde mail id {to}")
+        print(f"We have sent the bill for the month {num_to_month[month-1]} to your registered mail id {to}")
         feedback()
     else:
         print("Wrong mail id. Try again.")
@@ -259,15 +267,13 @@ def bill_details():
 
 # How to pay bill
 def how_to_pay():
-    if(not auth):
-        auth = authenticate()
     print("You can make the payment through our ACT Fibernet app or on our website.")
     print("To know more you can also refer the FAQs section")
     feedback()
 
 # Reconnection
 def reconnection():
-    print("Great! Looks like your account is already active. For any further queries click on the below button")
+    print("Great! Looks like your account is already active. For any further queries, restart the chat again.")
     start_again()
 
 # Shift connection
@@ -279,11 +285,11 @@ def shift():
         print("Wrong input. Try again.")
         ch = int(input("Enter your choice: "))
     if(ch==1):
-        print("We would need a few details. Redirecting you to other screen for the same")
-        print("For any further queries, click on below button")
+        print("We would need a few details. Redirecting you to other screen for the same.")
+        print("For any further queries, restart the chat again.")
     else:
         print("I hope to see you soon! For any further queries connect with us through our ACT Fibernet app")
-    start_again()
+    feedback()
 
 # Check status
 def check_status():
@@ -292,13 +298,14 @@ def check_status():
         print(s)
     else:
         print("There are no tickets open for you.")
-    
+    feedback()
 
 # Payment receipt
 def payment_receipt():
     to = input("Enter the mail id to send the latest receipt: ")
     if(validate_mail(to)):
         print("Payment receipt has been sent to", to)
+        feedback()
     else:
         print("Wrong mail id. Try again.")
         payment_receipt()
@@ -311,11 +318,11 @@ def change_plan():
     while(ch > 2 or ch < 1):
         print("Wrong input. Try again.")
         ch = int(input("Enter your choice: "))
-    if(ch==1):
-        print("We would need a few details. Redirecting you to other screen for the same")
-        print("For any further queries, click on below button")
+    if ch == 1:
+        print("We would need a few details. Redirecting you to other screen for the same.")
+        print("For any further queries, restart the chat again.")
     else:
-        print("I hope to see you soon! For any further queries connect with us through our ACT Fibernet app")
+        print("I hope to see you soon! For any further queries connect with us through our ACT Fibernet app.")
     start_again()
 
     
@@ -325,6 +332,7 @@ def power_issues():
     time.sleep(10)
     print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
     print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
+    global s
     s = generate_ticket()
     print("Your ticket number is", s)
     feedback()
@@ -383,10 +391,11 @@ def cable():
         print("Wrong input. Try again.")
         ch = int(input("Enter your choice: "))
     if ch == 1:
+        global auth
         if(not auth):
             auth = authenticate()
-            print("Done. Our representatives will get back to you soon on", phone)
-            start_again()
+        print("Done. Our representatives will get back to you soon on", phone)
+        start_again()
     else:
         reg = input("Enter your 5 digit registration number: ")
         while(len(reg) != 5):
@@ -397,13 +406,10 @@ def cable():
 
 # New Connection
 def new_connection():
+    global auth
     if(not auth):
         auth = authenticate()
-        print("Done. Our representatives will get back to you soon on", phone)
-        start_again()
+    print("Done. Our representatives will get back to you soon on", phone)
+    start_again()
 
-# Main function
-if __name__ == "__main__":
-    auth = False
-    s = 0
-    welcome()
+welcome()
