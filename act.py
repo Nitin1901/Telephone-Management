@@ -52,7 +52,7 @@ def validate_number(phone):
 
 # Validating mail id
 def validate_mail(mail):
-    patern= re.compile("^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$")
+    pattern = re.compile("^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$")
     return pattern.match(mail)
 
 # Get random text
@@ -190,9 +190,17 @@ def internet_not_working():
                 print("Your ticket number is", s)
             feedback()
         else:
-            pass
+            print("Please enter the site with which you are having trouble")
+            input()
+            s = generate_ticket()
+            print("Your ticket number is", s)
     else:
-        pass
+        print("Request you to provide the comments")
+        print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
+        print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
+        s = generate_ticket()
+        print("Your ticket number is", s)
+    start_again()
 
 
 # Configure router
@@ -259,7 +267,8 @@ def how_to_pay():
 
 # Reconnection
 def reconnection():
-    pass
+    print("Great! Looks like your account is already active. For any further queries click on the below button")
+    start_again()
 
 # Shift connection
 def shift():
