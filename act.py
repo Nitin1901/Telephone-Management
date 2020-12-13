@@ -18,7 +18,6 @@ num_to_month = [
     'November',
     'December'
 ]
-
 auth = False
 s = 0
 phone = 0
@@ -162,7 +161,8 @@ def new_broadband():
 
 # Internet not working
 def internet_not_working():
-    print("We are checking the connectivity from backend. This might take about 10 seconds")
+    global s
+    print("We are checking the connectivity from backend. This might take about 10 seconds.")
     time.sleep(10)
     print("Please confirm if you are able to open www.google.com")
     print("1.Yes\n2.No")
@@ -189,24 +189,21 @@ def internet_not_working():
                 print("Wrong input. Try again.")
                 ch2 = int(input("Enter your choice: "))
             if ch2 == 1:
-                print("Great! Looks like your service have been restored. Thank you for your patience")
+                print("Great! Looks like your service have been restored. Thank you for your patience.")
             else:
                 print("Request you to provide the comments")
                 print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
                 print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
-                global s
                 s = generate_ticket()
                 print("Your ticket number is", s)
         else:
             input("Please enter the site with which you are having trouble: ")
-            global s
             s = generate_ticket()
             print("Your ticket number is", s)
     else:
         print("Request you to provide the comments")
         print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
         print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
-        global s
         s = generate_ticket()
         print("Your ticket number is", s)
     feedback()
