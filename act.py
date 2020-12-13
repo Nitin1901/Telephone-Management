@@ -1,9 +1,10 @@
 # Importing the libraries
-import random
-import string
-import re
-import time
+import random # To generate random text
+import string # To select all the characters
+import re     # To match the strings  (regular expressions)
+import time   # To pause for some time
 
+# Declaring the variables
 num_to_month = [
     'January',
     'February',
@@ -19,17 +20,17 @@ num_to_month = [
     'December'
 ]
 auth = False
-s = 0
+ticket = 0
 phone = 0
 
 # Welcome
 def welcome():
-    print("Hi, Welcome to ACT! Please select the service you need help with")
-    print("1.ACT Broadband")
-    print("2.Cable TV")
-    print("3.Need a new connection")
-    ch = int(input("Enter your choice: "))
-    while(ch > 3 or ch < 1):
+    print("Hi, Welcome to ACT! Please select the service you need help with.")
+    print("1.ACT Broadband.")
+    print("2.Cable TV.")
+    print("3.Need a new connection.")
+    ch = int(input("Enter your choice: ")) # Taking input
+    while(ch > 3 or ch < 1): # Validating the input
         print("Wrong input. Try again.")
         ch = int(input("Enter your choice: "))
     if ch == 1:
@@ -51,20 +52,21 @@ def get_phone():
 # Validating phone number
 def validate_number(phone):
     if len(phone) == 10:
-        pattern = re.compile("[7-9][0-9]{9}")
+        pattern = re.compile("[7-9][0-9]{9}") # Using re pattern to match the phone number
         return pattern.match(phone)
     return False
 
 # Validating mail id
 def validate_mail(mail):
-    pattern = re.compile("^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$")
+    pattern = re.compile("^[a-z0-9]+[\._]?[a-z0-9]+[@]\w+[.]\w{2,3}$") # using regex pattern to match email id
     return pattern.match(mail)
 
 # Get random text
 def generate_text():
-    letters = string.ascii_letters + string.digits
-    return ''.join(random.choice(letters) for i in range(5))
+    letters = string.ascii_letters + string.digits # Storing all the available charatcter and digits
+    return ''.join(random.choice(letters) for i in range(5)) # Generating a string of length 5 from the stored variable
 
+# Generate a random ticket number
 def generate_ticket():
     digits = string.digits
     return 'SR' + ''.join(random.choice(digits) for i in range(10))
@@ -94,6 +96,7 @@ def authenticate():
 
 # Provide feedback
 def feedback():
+    time.sleep(2) # Pausing for 2 seconds to generate the feedback form
     print("Please provide your feedback.")
     print("How helpful was this conversation on a scale of 1-5?")
     ch = int(input("Enter your choice: "))
@@ -105,7 +108,7 @@ def feedback():
 
 # ACT Broadband
 def broadband():
-    global auth
+    global auth # making the authentication variable global so that the user need not enter it many times
     if(not auth):
         auth = authenticate()
     print(" 1.New connection")
@@ -131,7 +134,7 @@ def broadband():
     elif ch == 2:
         internet_not_working() 
     elif ch == 3:
-        configure_router() #
+        configure_router()
     elif ch == 4:
         forgot_password()
     elif ch == 5:
@@ -161,7 +164,7 @@ def new_broadband():
 
 # Internet not working
 def internet_not_working():
-    global s
+    global ticket
     print("We are checking the connectivity from backend. This might take about 10 seconds.")
     time.sleep(10)
     print("Please confirm if you are able to open www.google.com")
@@ -194,23 +197,48 @@ def internet_not_working():
                 print("Request you to provide the comments")
                 print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
                 print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
-                s = generate_ticket()
-                print("Your ticket number is", s)
+                ticket = generate_ticket()
+                print("Your ticket number is", ticket)
         else:
             input("Please enter the site with which you are having trouble: ")
-            s = generate_ticket()
-            print("Your ticket number is", s)
+            ticket = generate_ticket()
+            print("Your ticket number is", ticket)
     else:
         print("Request you to provide the comments")
         print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
         print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
-        s = generate_ticket()
-        print("Your ticket number is", s)
+        ticket = generate_ticket()
+        print("Your ticket number is", ticket)
     feedback()
 
 # Configure router
 def configure_router():
-    pass
+    global ticket
+    global phone
+    print("We are checking the connectivity from backend. This might take about 10 seconds.")
+    time.sleep(10)
+    print("Please select the router issue you are facing to help us resolve your issue.")
+    print("1.Need to change the WiFi name or password.")
+    print("2.Auto-login of the internet.")
+    print("3.Need to change my router login password.")
+    print("4.Need to configure my new router.")
+    print("5.Forgot my WiFi password.")
+    ch = int(input("Enter your choice: "))
+    while(ch > 5 or ch < 1):
+        print("Wrong input. Try again.")
+        ch = int(input("Enter your choice: "))
+    if ch == 1:
+        print("A link has been sent to", phone)
+    elif ch == 2:
+        print("Please select the remember me option on the login page.")
+    elif ch == 3:
+        print("A link has been sent along with the instructions to", phone)
+    elif ch == 4:
+        print("We will send you the configuration steps to", phone)
+    else:
+        forgot_password()
+        return
+    feedback()
 
 # Forgot password
 def forgot_password():
@@ -290,9 +318,9 @@ def shift():
 
 # Check status
 def check_status():
-    if s != 0:
+    if ticket != 0:
         print("These are the service requests open for you.")
-        print(s)
+        print(ticket)
     else:
         print("There are no tickets open for you.")
     feedback()
@@ -329,9 +357,9 @@ def power_issues():
     time.sleep(10)
     print("Thank you for your patience. We sincerely regret the inconvenience.", end=" ")
     print("Please be assured that we are working towards resolving this at the earliest.", end=" ")
-    global s
-    s = generate_ticket()
-    print("Your ticket number is", s)
+    global ticket
+    ticket = generate_ticket()
+    print("Your ticket number is", ticket)
     feedback()
 
 # New offers
@@ -409,4 +437,6 @@ def new_connection():
     print("Done. Our representatives will get back to you soon on", phone)
     start_again()
 
-welcome()
+# Driver function (main function)
+if __name__ == "__main__":
+    welcome()
